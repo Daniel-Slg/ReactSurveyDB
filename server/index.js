@@ -8,7 +8,7 @@ console.log('Server is starting...');
 
 //middleware
 app.use(cors());
-pp.use(express.json()); 
+app.use(express.json()); 
 
 
 // Routes
