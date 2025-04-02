@@ -1,0 +1,4 @@
+# Ignore password file in the Server folder
+Server/passwd.js
+# Ignore the build folder in the Server folder
+Server/build        
