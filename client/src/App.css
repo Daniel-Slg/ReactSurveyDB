@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+/* index.css or App.css */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* App.css */
+.app-background {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(to bottom right, #0a1f44, #2c2c2c); /* Dark blue to dark gray */
+  color: white;
+}
