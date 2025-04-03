@@ -14,5 +14,16 @@ services:
     volumes:
       - ./init:/docker-entrypoint-initdb.d
 
-volumes:
-  postgres_data:
+  nodejs-app:
+    build: .
+    container_name: nodejs_app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    environment:
+      DB_HOST: postgres  # Reference PostgreSQL container name
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: surveys_db
