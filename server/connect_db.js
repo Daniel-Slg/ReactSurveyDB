@@ -12,11 +12,11 @@ try {
 
 
 const pool = new Pool({
-    user: 'dbCredentials.user',
-    password: 'dbCredentials.password', 
+    user: dbCredentials.user,
+    password: dbCredentials.password, 
     host: 'localhost',
     port: 5432,
-    database: 'survey_db'
+    database: 'surveys_db'
 });
 
 module.exports = pool; // Export the pool object for use in other files
