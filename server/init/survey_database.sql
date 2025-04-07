@@ -6,6 +6,12 @@ CREATE TABLE users (
     role VARCHAR(10) CHECK (role IN ('admin', 'user')) NOT NULL
 );
 
+INSERT INTO users (username, password_hash, role)
+VALUES ('testuser', 'pwuser', 'user');
+
+INSERT INTO users (username, password_hash, role)
+VALUES ('testadmin', 'pwadmin', 'admin');
+
 -- Surveys table
 CREATE TABLE surveys (
     id SERIAL PRIMARY KEY,
