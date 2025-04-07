@@ -12,18 +12,27 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./init:/docker-entrypoint-initdb.d
+      - ./server/init/survey_database.sql:/docker-entrypoint-initdb.d/survey_database.sql
 
   nodejs-app:
-    build: .
+    build: ./server
     container_name: nodejs_app
     ports:
-      - "3000:3000"
+      - "5000:5000"
     depends_on:
       - postgres
     environment:
-      DB_HOST: postgres  # Reference PostgreSQL container name
+      DB_HOST: postgres
       DB_PORT: 5432
       DB_USER: postgres
       DB_PASSWORD: postgres
       DB_NAME: surveys_db
+
+  client:
+    build: ./client
+    container_name: client_app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - nodejs-app
+
