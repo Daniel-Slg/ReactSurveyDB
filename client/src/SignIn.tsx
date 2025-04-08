@@ -1,86 +1,52 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import { useNavigate } from 'react-router-dom';  // Für Weiterleitung nach dem Login
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-export default function SignIn() {
-  const [usernameError, setUsernameError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
+const SignIn = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!validateInputs()) return;
-
     try {
-      const response = await fetch('http://localhost:5000/api/login', {  // Backend-Route anpassen
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }), // Ändern von 'email' zu 'username'
+      const response = await axios.post('http://localhost:5000/api/login', {
+        username,
+        password,
       });
 
-      const data = await response.json();
-      if (data.success) {
-        navigate('/dashboard');  // Weiterleitung, wenn Login erfolgreich
+      if (response.data.success) {
+        console.log("Login erfolgreich!");
+        navigate('/dashboard'); // Weiterleitung bei Erfolg
       } else {
-        // Fehlerbehandlung
-        alert(data.message);
+        alert(response.data.message || 'Login fehlgeschlagen');
       }
-    } catch (error) {
-      console.error('Error during login:', error);
-      alert('Login failed!');
+    } catch (error: any) {
+      console.error("Fehler beim Login:", error.response?.data || error.message);
+      alert(error.response?.data?.message || 'Login fehlgeschlagen');
     }
-  };
-
-  const validateInputs = () => {
-    let isValid = true;
-    if (!username || username.length < 1) { // Anpassung von 'email' zu 'username'
-      setUsernameError(true);
-      isValid = false;
-    } else {
-      setUsernameError(false);
-    }
-    if (!password || password.length < 6) {
-      setPasswordError(true);
-      isValid = false;
-    } else {
-      setPasswordError(false);
-    }
-    return isValid;
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} noValidate>
-      <Typography variant="h4">Sign In</Typography>
-      <TextField
-        error={usernameError}
-        helperText={usernameError ? 'Please enter a valid username.' : ''} // Anpassung von 'email' zu 'username'
-        label="Username" // Anpassung des Texts von 'Email' zu 'Username'
+    <form onSubmit={handleLogin}>
+      <input
+        type="text"
+        placeholder="Benutzername"
         value={username}
-        onChange={(e) => setUsername(e.target.value)} // 'email' zu 'username'
-        fullWidth
+        onChange={(e) => setUsername(e.target.value)}
         required
       />
-      <TextField
-        error={passwordError}
-        helperText={passwordError ? 'Password must be at least 6 characters.' : ''}
-        label="Password"
+      <input
         type="password"
+        placeholder="Passwort"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        fullWidth
         required
       />
-      <Button type="submit" variant="contained" fullWidth>
-        Sign In
-      </Button>
-    </Box>
+      <button type="submit">Einloggen</button>
+    </form>
   );
-}
+};
+
+export default SignIn;

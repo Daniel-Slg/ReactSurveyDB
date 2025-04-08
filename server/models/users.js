@@ -6,6 +6,12 @@ const getUsers = async () => {
     return result.rows;
 };
 
+// NEW: Get a user by username
+const getUserByUsername = async (username) => {
+    const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
+    return result.rows[0];
+};
+
 // Get a user by ID
 const getUserById = async (id) => {
     const result = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
@@ -35,4 +41,4 @@ const deleteUser = async (id) => {
     await pool.query('DELETE FROM users WHERE id = $1', [id]);
 };
 
-module.exports = { getUsers, getUserById, createUser, updateUser, deleteUser };
+module.exports = { getUsers, getUserById, createUser, updateUser, deleteUser, getUserByUsername};

@@ -1,22 +1,28 @@
 const express = require('express');
-const { getUserByUsername } = require('../models/users');
 const router = express.Router();
+const { getUserByUsername } = require('../models/users');
 
 router.post('/login', async (req, res) => {
-  const { username, password } = req.body;  // Get username and password from request body
+  const { username, password } = req.body;
 
-  // Fetch user by username
-  const user = await getUserByUsername(username);
+  try {
+    const user = await getUserByUsername(username);
 
-  if (!user) {
-    return res.status(400).json({ message: 'Invalid credentials' });
-  }
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid user' });
+    }
 
-  // Compare password directly (no hashing involved)
-  if (user.password === password) { // Assuming 'password' is the plain text password in DB
-    res.status(200).json({ success: true, message: 'Login successful' });
-  } else {
-    return res.status(400).json({ message: 'Invalid credentials' });
+    console.log('DB password:', user.password_hash);
+    console.log('Entered password:', password);
+
+    if (user.password_hash === password) {
+      return res.status(200).json({ success: true, message: 'Login successful', user });
+    } else {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+  } catch (err) {
+    console.error('Login error:', err);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 

@@ -1,5 +1,5 @@
 const express = require('express');
-const { getUsers, getUserById, createUser, updateUser, deleteUser } = require('../models/users');
+const { getUsers, getUserById, createUser, updateUser, deleteUser, getUserByUsername} = require('../models/users');
 const router = express.Router();
 
 // Get all users
@@ -7,6 +7,22 @@ router.get('/', async (req, res) => {
     try {
         const users = await getUsers();
         res.json(users);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Get a specific user by Username
+router.get('/:username', async (req, res) => {
+    const { username } = req.params;
+    try {
+        console.log(`Fetching user with ID: ${username}`);  // Log the username to check if it's being passed correctly
+        const user = await getUserByUsername(username);
+        console.log(user);  // Log the result of getUserById
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.json(user);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -27,7 +43,6 @@ router.get('/:id', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
-
 
 // Create a new user
 router.post('/', async (req, res) => {
