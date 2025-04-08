@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './SignIn.css';
 
 const SignIn = () => {
   const [username, setUsername] = useState('');
@@ -29,7 +30,7 @@ const SignIn = () => {
   };
 
   return (
-    <form onSubmit={handleLogin}>
+    <form onSubmit={handleLogin} className="signin-form">
       <input
         type="text"
         placeholder="Benutzername"
