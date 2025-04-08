@@ -1,18 +1,24 @@
+// import React from 'react';
+// import { Button, Typography } from '@mui/material';
+// import './App.css'; // Import CSS
+
+// src/App.js
 import React from 'react';
 import { Button, Typography } from '@mui/material';
 import './App.css'; // Import CSS
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import SignIn from './SignIn.tsx'; // Dein SignIn Component
-import Dashboard from './Dashboard'; // Ein Beispiel für eine Seite nach dem Login
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<SignIn />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
-    </Router>
+    <div className="app-background">
+      <div>
+        <Typography variant="h4" gutterBottom>
+          Welcome to My React App with MUI!
+        </Typography>
+        <Button variant="contained" color="primary">
+          Click Me
+        </Button>
+      </div>
+    </div>
   );
 }
 

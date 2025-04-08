@@ -1,0 +1,89 @@
+/* src/Survey.css */
+html, body {
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    height: 100%; /* Ensure it takes full height */
+    width: 100%; /* Ensure it takes full width */
+  }
+  
+  .survey-background {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(to bottom right, #0a1f44, #2c2c2c); /* Dark blue to dark gray */
+    color: white; /* Make all text white */
+  }
+  
+  
+  .survey-container {
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.6); /* Slightly transparent background */
+    border-radius: 8px;
+    width: 80%;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .survey-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .survey-button {
+    margin-top: 20px;
+    align-self: center;
+    background-color: #1976d2; /* Primary button color */
+  }
+  
+  .survey-button:hover {
+    background-color: #115293; /* Darker shade on hover */
+  }
+  
+  .MuiTypography-root {
+    color: white !important; /* Make all Typography texts white */
+  }
+  
+  .MuiTextField-root input {
+    color: white !important; /* Make input text white */
+  }
+  
+  .MuiInputLabel-root {
+    color: white !important; /* Make labels white */
+  }
+  
+  .MuiSelect-root {
+    color: white !important; /* Make select options text white */
+  }
+  
+  .MuiFormControl-root .MuiInputBase-root {
+    background-color: rgba(255, 255, 255, 0.2); /* Slightly transparent background for form fields */
+    border-radius: 4px;
+  }
+  
+  .MuiButton-root {
+    color: white !important;
+    background-color: #1976d2; /* Button color */
+  }
+  
+  .MuiButton-root:hover {
+    background-color: #115293;
+  }
+  /* Change the color of text inside input fields */
+.MuiInputBase-input {
+    color: white !important;
+  }
+  
+  /* Change the label color when focused and not focused */
+  .MuiInputLabel-root {
+    color: white !important;
+  }
+  
+  /* Change the color of the notched outline for outlined inputs */
+  .MuiOutlinedInput-notchedOutline {
+    border-color: white !important;
+  }
+  
