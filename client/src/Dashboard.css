@@ -1,0 +1,49 @@
+/* Hintergrund und Zentrierung */
+.dashboard-page {
+    height: 100vh;
+    background: linear-gradient(to bottom right, #0a1f44, #2c2c2c);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 40px;
+  }
+  
+  /* Button-Container */
+  .buttons-container {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  /* Link-Stil entfernen */
+  .dashboard-button-link {
+    text-decoration: none;
+  }
+  
+  /* Stylische Box-Buttons */
+  .dashboard-button-box {
+    background-color: #333;
+    padding: 30px 50px;
+    border-radius: 12px;
+    font-size: 1.5rem;
+    text-align: center;
+    color: white;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    min-width: 220px;
+  }
+  
+  .dashboard-button-box:hover {
+    background-color: #61dafb;
+    color: #0a1f44;
+    transform: scale(1.05);
+  }
+  

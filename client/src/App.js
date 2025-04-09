@@ -1,12 +1,12 @@
 import React from 'react';
  import { Button, Typography } from '@mui/material';
- import './App.css'; // Import CSS
+ import './App.css';
  import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
- import SignIn from './SignIn.tsx'; // Dein SignIn Component
- import Dashboard from './Dashboard'; // Ein Beispiel für eine Seite nach dem Login
- import Homepage from './Homepage.js'; // Ein Beispiel für eine Homepage
- import Survey from './Survey'; // Dein Survey Component
- import Answering from './Answering'; // Dein Answering Component
+ import SignIn from './SignIn.tsx'; 
+ import Dashboard from './Dashboard'; 
+ import Homepage from './Homepage.js'; 
+ import Survey from './Survey';
+ import Answering from './Answering'; 
  
  function App() {
    return (
