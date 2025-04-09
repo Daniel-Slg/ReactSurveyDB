@@ -13,7 +13,7 @@ const getSurveys = async () => {
   }
 };
 
-// Fetch a specific survey and its questions
+// Fetch a specific survey and its questions with choices
 const getSurveyById = async (surveyId) => {
   const client = await pool.connect();
   try {
@@ -24,8 +24,30 @@ const getSurveyById = async (surveyId) => {
 
     const survey = surveyResult.rows[0];
     const questionsResult = await client.query('SELECT * FROM questions WHERE survey_id = $1', [surveyId]);
-    survey.questions = questionsResult.rows;  // Attach questions to survey
 
+    const questionIds = questionsResult.rows.map(q => q.id);
+    const choicesResult = await client.query(
+      'SELECT * FROM choices WHERE question_id = ANY($1)',
+      [questionIds]
+    );
+
+    const questionsWithChoices = questionsResult.rows.map(question => {
+      const choices = question.question_type === 'multiple_choice'
+        ? choicesResult.rows
+            .filter(choice => choice.question_id === question.id)
+            .map(choice => ({
+              id: choice.id,
+              choice_text: choice.choice_text
+            }))
+        : [];
+
+      return {
+        ...question,
+        choices
+      };
+    });
+
+    survey.questions = questionsWithChoices;
     return survey;
   } catch (err) {
     throw new Error('Error fetching survey by ID: ' + err.message);
@@ -34,7 +56,7 @@ const getSurveyById = async (surveyId) => {
   }
 };
 
-// Create a new survey with questions
+// Create a new survey with questions and choices
 const createSurveyWithQuestions = async (title, description, created_by, questions) => {
   const client = await pool.connect();
   try {
@@ -55,6 +77,7 @@ const createSurveyWithQuestions = async (title, description, created_by, questio
       );
       const questionId = questionResult.rows[0].id;
 
+      // Insert choices for multiple-choice questions
       if (question_type === 'multiple_choice' && choices) {
         for (let choice of choices) {
           await client.query(
@@ -73,19 +96,26 @@ const createSurveyWithQuestions = async (title, description, created_by, questio
     // Fetch the full survey with questions and choices
     const survey = await client.query('SELECT * FROM surveys WHERE id = $1', [surveyId]);
     const questionsResult = await client.query('SELECT * FROM questions WHERE survey_id = $1', [surveyId]);
-    const choicesResult = await client.query('SELECT * FROM choices WHERE question_id IN (SELECT id FROM questions WHERE survey_id = $1)', [surveyId]);
+    const choicesResult = await client.query(
+      'SELECT * FROM choices WHERE question_id IN (SELECT id FROM questions WHERE survey_id = $1)',
+      [surveyId]
+    );
 
-    // Structure the response to include the full survey with questions and choices
     const fullSurvey = {
-      ...survey.rows[0],  // Include the survey details
+      ...survey.rows[0],
       questions: questionsResult.rows.map(question => ({
         ...question,
-        choices: choicesResult.rows.filter(choice => choice.question_id === question.id).map(choice => choice.choice_text)
+        choices: choicesResult.rows
+          .filter(choice => choice.question_id === question.id)
+          .map(choice => ({
+            id: choice.id,
+            choice_text: choice.choice_text
+          }))
       }))
     };
 
     await client.query('COMMIT');
-    return fullSurvey; // Return the full survey with questions and choices
+    return fullSurvey;
   } catch (err) {
     await client.query('ROLLBACK');
     throw new Error(err.message);
@@ -93,7 +123,6 @@ const createSurveyWithQuestions = async (title, description, created_by, questio
     client.release();
   }
 };
-
 
 module.exports = {
   getSurveys,

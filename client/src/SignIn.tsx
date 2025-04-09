@@ -20,7 +20,9 @@ const SignIn = () => {
       if (response.data.success) {
         console.log("Login erfolgreich!");
         const { role } = response.data.user;
+        const { id } = response.data.user;
         localStorage.setItem('userRole', role); // speichert die Rolle im Browser
+        localStorage.setItem('userId', id);
         navigate('/dashboard'); // Weiterleitung bei Erfolg
       } else {
         alert(response.data.message || 'Login fehlgeschlagen');
