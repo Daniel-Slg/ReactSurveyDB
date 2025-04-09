@@ -19,6 +19,8 @@ const SignIn = () => {
 
       if (response.data.success) {
         console.log("Login erfolgreich!");
+        const { role } = response.data.user;
+        localStorage.setItem('userRole', role); // speichert die Rolle im Browser
         navigate('/dashboard'); // Weiterleitung bei Erfolg
       } else {
         alert(response.data.message || 'Login fehlgeschlagen');
