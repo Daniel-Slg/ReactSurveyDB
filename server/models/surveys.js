@@ -24,7 +24,7 @@ const getSurveyById = async (surveyId) => {
 
     const survey = surveyResult.rows[0];
     const questionsResult = await client.query('SELECT * FROM questions WHERE survey_id = $1', [surveyId]);
-    survey.questions = questionsResult.rows;
+    survey.questions = questionsResult.rows;  // Attach questions to survey
 
     return survey;
   } catch (err) {
@@ -70,8 +70,22 @@ const createSurveyWithQuestions = async (title, description, created_by, questio
       );
     }
 
+    // Fetch the full survey with questions and choices
+    const survey = await client.query('SELECT * FROM surveys WHERE id = $1', [surveyId]);
+    const questionsResult = await client.query('SELECT * FROM questions WHERE survey_id = $1', [surveyId]);
+    const choicesResult = await client.query('SELECT * FROM choices WHERE question_id IN (SELECT id FROM questions WHERE survey_id = $1)', [surveyId]);
+
+    // Structure the response to include the full survey with questions and choices
+    const fullSurvey = {
+      ...survey.rows[0],  // Include the survey details
+      questions: questionsResult.rows.map(question => ({
+        ...question,
+        choices: choicesResult.rows.filter(choice => choice.question_id === question.id).map(choice => choice.choice_text)
+      }))
+    };
+
     await client.query('COMMIT');
-    return { message: 'Survey created successfully with questions and choices' };
+    return fullSurvey; // Return the full survey with questions and choices
   } catch (err) {
     await client.query('ROLLBACK');
     throw new Error(err.message);
@@ -79,6 +93,7 @@ const createSurveyWithQuestions = async (title, description, created_by, questio
     client.release();
   }
 };
+
 
 module.exports = {
   getSurveys,

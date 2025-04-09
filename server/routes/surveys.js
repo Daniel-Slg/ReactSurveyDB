@@ -6,7 +6,6 @@ const {
   createSurveyWithQuestions
 } = require('../models/surveys');
 
-// Route: Get all surveys
 router.get('/', async (req, res) => {
   try {
     const surveys = await getSurveys();
@@ -15,6 +14,19 @@ router.get('/', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+
+// POST route to create surveys
+router.post('/', async (req, res) => {
+  const { title, description, created_by, questions } = req.body;
+  try {
+    const result = await createSurveyWithQuestions(title, description, created_by, questions);
+    res.status(201).json(result);  // Return the full survey object
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 // Route: Get a specific survey by ID
 router.get('/:id', async (req, res) => {
@@ -30,15 +42,5 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Optional: POST route to create surveys (if needed)
-router.post('/', async (req, res) => {
-  const { title, description, created_by, questions } = req.body;
-  try {
-    const result = await createSurveyWithQuestions(title, description, created_by, questions);
-    res.status(201).json(result);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
 
 module.exports = router;

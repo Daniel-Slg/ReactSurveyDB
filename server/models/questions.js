@@ -6,6 +6,19 @@ const getQuestions = async (survey_id) => {
     return result.rows;
 };
 
+const getQuestionById = async (id) => {
+    const client = await pool.connect();
+    try {
+      const result = await client.query('SELECT * FROM questions WHERE id = $1', [id]);
+      return result.rows[0];
+    } catch (err) {
+      throw new Error('Error fetching question by ID: ' + err.message);
+    } finally {
+      client.release();
+    }
+  };
+
+  
 // Create a new question for a survey
 const createQuestion = async (survey_id, question_text, question_type) => {
     const result = await pool.query(
@@ -29,4 +42,11 @@ const deleteQuestion = async (id) => {
     await pool.query('DELETE FROM questions WHERE id = $1', [id]);
 };
 
-module.exports = { getQuestions, createQuestion, updateQuestion, deleteQuestion };
+  
+module.exports = {
+    getQuestions,
+    getQuestionById,
+    createQuestion,
+    updateQuestion,
+    deleteQuestion
+  };

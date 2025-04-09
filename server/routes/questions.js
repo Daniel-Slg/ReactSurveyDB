@@ -1,5 +1,5 @@
 const express = require('express');
-const { getQuestions, createQuestion, updateQuestion, deleteQuestion } = require('../models/questions');
+const { getQuestions, createQuestion, updateQuestion, deleteQuestion, getQuestionById} = require('../models/questions');
 const router = express.Router();
 
 // Get all questions for a survey
@@ -12,6 +12,21 @@ router.get('/:survey_id', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+// Get a single question by question ID
+router.get('/id/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const question = await getQuestionById(id);
+        if (!question) {
+            return res.status(404).json({ error: 'Question not found' });
+        }
+        res.json(question);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
 
 // Create a new question
 router.post('/:survey_id', async (req, res) => {

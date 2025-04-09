@@ -59,19 +59,23 @@ const Survey = () => {
   // Handle the submission of the survey form
   const handleSubmit = async () => {
     const response = await fetch('http://localhost:5000/api/surveys', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(survey),
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(survey),
     });
-
+  
     const data = await response.json();
+  
+    // Log the full survey data
+    console.log('Returned data:', JSON.stringify(data, null, 2));
+  
     if (response.ok) {
-        console.log('Survey created:', data);
+      console.log('Survey created successfully');
     } else {
-        console.error('Error creating survey:', data);
+      console.error('Error creating survey:', JSON.stringify(data, null, 2));
     }
   };
-
+  
 
   return (
     <div className="survey-background"> {/* Container with background style from Survey.css */}
