@@ -4,6 +4,7 @@ html, body {
     padding: 0; /* Remove default padding */
     height: 100%; /* Ensure it takes full height */
     width: 100%; /* Ensure it takes full width */
+    
   }
   
   .survey-background {
