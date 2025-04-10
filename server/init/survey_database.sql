@@ -7,7 +7,17 @@ CREATE TABLE users (
 );
 
 INSERT INTO users (username, password_hash, role)
-VALUES ('testuser', 'pwuser', 'user');
+VALUES ('testuser1', 'pwuser', 'user');
+INSERT INTO users (username, password_hash, role)
+VALUES ('testuser2', 'pwuser', 'user');
+INSERT INTO users (username, password_hash, role)
+VALUES ('testuser3', 'pwuser', 'user');
+INSERT INTO users (username, password_hash, role)
+VALUES ('testuser4', 'pwuser', 'user');
+INSERT INTO users (username, password_hash, role)
+VALUES ('testuser5', 'pwuser', 'user');
+INSERT INTO users (username, password_hash, role)
+VALUES ('testuser6', 'pwuser', 'user');
 
 INSERT INTO users (username, password_hash, role)
 VALUES ('testadmin', 'pwadmin', 'admin');

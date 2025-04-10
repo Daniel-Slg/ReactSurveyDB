@@ -9,6 +9,7 @@ const questionsRouter = require('./routes/questions');  // Import the questions 
 const responsesRouter = require('./routes/responses');  // Import the responses route
 const answersRouter = require('./routes/answers');  // Import the answers route
 const choicesRouter = require('./routes/choices');  // Import the choices route
+const analyticsRouter = require('./routes/analytics'); // Import the analytics route
 
 
 console.log('Server is starting...');
@@ -32,6 +33,8 @@ app.use('/api/responses', responsesRouter);
 app.use('/api/answers', answersRouter);
 // Use the choices routes
 app.use('/api/choices', choicesRouter);
+// Use the analytics routes
+app.use('/api/analytics', analyticsRouter)
 
 app.listen(5000, () => {
   console.log('Server is running on port 5000');
