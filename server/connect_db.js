@@ -6,7 +6,7 @@ console.log('Database Host:', process.env.DB_HOST);
 
 const pool = new Pool({
   user: process.env.DB_USER || 'postgres',
-  host: process.env.DB_HOST || 'postgres', // Use "postgres" as default host, not localhost
+  host: process.env.DB_HOST || 'postgres', 
   database: process.env.DB_NAME || 'surveys_db',
   password: process.env.DB_PASSWORD || 'postgres',
   port: process.env.DB_PORT || 5432,
@@ -15,6 +15,7 @@ const pool = new Pool({
 module.exports = pool;
 
 
+// Code below used for passwd file, as of now not needed
 // const Pool = require('pg').Pool;
 
 // let dbCredentials = {};

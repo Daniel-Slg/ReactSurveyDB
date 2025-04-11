@@ -6,6 +6,7 @@ CREATE TABLE users (
     role VARCHAR(10) CHECK (role IN ('admin', 'user')) NOT NULL
 );
 
+-- For Testing purposes user and admin creation
 INSERT INTO users (username, password_hash, role)
 VALUES ('testuser', 'pwuser', 'user');
 INSERT INTO users (username, password_hash, role)
@@ -18,7 +19,6 @@ INSERT INTO users (username, password_hash, role)
 VALUES ('testuser5', 'pwuser', 'user');
 INSERT INTO users (username, password_hash, role)
 VALUES ('testuser6', 'pwuser', 'user');
-
 INSERT INTO users (username, password_hash, role)
 VALUES ('testadmin', 'pwadmin', 'admin');
 

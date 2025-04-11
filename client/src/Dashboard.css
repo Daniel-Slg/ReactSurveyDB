@@ -1,81 +1,83 @@
-/* Hintergrund und Zentrierung */
+/* Floating box showing user role */
 .role-floating-box {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: #444;
-    color: #fff;
-    padding: 8px 14px;
-    border-radius: 10px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-    z-index: 1000;
-  }
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #444;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+}
 
+/* Dashboard header layout */
 .dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    position: relative;
-  }
-  
-  .role-box {
-    background-color: #333;
-    color: #fff;
-    padding: 6px 12px;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  position: relative;
+}
+
+/* Small role badge */
+.role-box {
+  background-color: #333;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Full-page dashboard styling */
 .dashboard-page {
-    height: 100vh;
-    background: linear-gradient(to bottom right, #0a1f44, #2c2c2c);
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  h1 {
-    font-size: 3rem;
-    margin-bottom: 40px;
-  }
-  
-  /* Button-Container */
-  .buttons-container {
-    display: flex;
-    flex-direction: row;
-    gap: 40px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  /* Link-Stil entfernen */
-  .dashboard-button-link {
-    text-decoration: none;
-  }
-  
-  /* Stylische Box-Buttons */
-  .dashboard-button-box {
-    background-color: #333;
-    padding: 30px 50px;
-    border-radius: 12px;
-    font-size: 1.5rem;
-    text-align: center;
-    color: white;
-    transition: transform 0.2s ease, background-color 0.3s ease;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
-    min-width: 220px;
-  }
-  
-  .dashboard-button-box:hover {
-    background-color: #61dafb;
-    color: #0a1f44;
-    transform: scale(1.05);
-  }
-  
+  height: 100vh;
+  background: linear-gradient(to bottom right, #0a1f44, #2c2c2c);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 40px;
+}
+
+/* Container for the main action buttons */
+.buttons-container {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Remove default link styling */
+.dashboard-button-link {
+  text-decoration: none;
+}
+
+/* Stylish dashboard buttons */
+.dashboard-button-box {
+  background-color: #333;
+  padding: 30px 50px;
+  border-radius: 12px;
+  font-size: 1.5rem;
+  text-align: center;
+  color: white;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  min-width: 220px;
+}
+
+.dashboard-button-box:hover {
+  background-color: #61dafb;
+  color: #0a1f44;
+  transform: scale(1.05);
+}

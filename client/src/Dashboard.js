@@ -7,7 +7,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-page">
-      {/* Feste Rolle-Box oben rechts */}
+      {/* Shos role in the top right */}
       <div className="role-floating-box">👤 {role}</div>
 
       <div className="dashboard-header">

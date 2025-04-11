@@ -6,7 +6,7 @@ const getChoices = async (question_id) => {
     return result.rows;
 };
 
-// Create a new choice for a question
+// Create a new chice for a question
 const createChoice = async (question_id, choice_text) => {
     const result = await pool.query(
         'INSERT INTO choices (question_id, choice_text) VALUES ($1, $2) RETURNING *',
@@ -15,7 +15,7 @@ const createChoice = async (question_id, choice_text) => {
     return result.rows[0];
 };
 
-// Delete a choice
+//Delete a choice
 const deleteChoice = async (id) => {
     await pool.query('DELETE FROM choices WHERE id = $1', [id]);
 };

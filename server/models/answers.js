@@ -6,13 +6,11 @@ const getAnswers = async (response_id) => {
     return result.rows;
 };
 
-// Create a new answer for a question with validation
 const createAnswer = async (response_id, question_id, answer_text, choice_id, client) => {
     if (!response_id || !question_id) {
         throw new Error('Response ID and Question ID are required');
     }
 
-    // Check if it's a valid choice_id (only validate if choice_id is provided)
     if (choice_id) {
         const choiceResult = await client.query('SELECT * FROM choices WHERE id = $1', [choice_id]);
         if (choiceResult.rowCount === 0) {
@@ -28,7 +26,6 @@ const createAnswer = async (response_id, question_id, answer_text, choice_id, cl
     return result.rows[0];
 };
 
-// Delete an answer
 const deleteAnswer = async (id) => {
     await pool.query('DELETE FROM answers WHERE id = $1', [id]);
 };

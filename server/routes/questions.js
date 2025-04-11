@@ -12,7 +12,7 @@ router.get('/:survey_id', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
-// Get a single question by question ID
+// Get a single question by question ID with no need of survey
 router.get('/id/:id', async (req, res) => {
     const { id } = req.params;
     try {

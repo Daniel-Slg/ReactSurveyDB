@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('../connect_db'); // Assuming the database connection pool is in this file
+const pool = require('../connect_db');
 
 // Function to get survey data (survey details)
 const getSurveyData = async (surveyId) => {
     const client = await pool.connect();
     try {
-        // Survey details (title, description)
         const surveyResult = await client.query(`
             SELECT id AS survey_id, title AS survey_title, description AS survey_description
             FROM surveys
@@ -19,7 +18,7 @@ const getSurveyData = async (surveyId) => {
 
         const surveyData = surveyResult.rows[0];
 
-        // Questions and choices
+        // Include also questions and results
         const questionResult = await client.query(`
             SELECT q.id AS question_id, q.question_text, q.question_type,
                    c.id AS choice_id, c.choice_text
@@ -28,7 +27,7 @@ const getSurveyData = async (surveyId) => {
             WHERE q.survey_id = $1
         `, [surveyId]);
 
-        // Group questions and choices
+        // grouping questions and choices
         const questions = [];
         questionResult.rows.forEach(row => {
             const question = questions.find(q => q.id === row.question_id);

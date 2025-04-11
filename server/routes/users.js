@@ -16,9 +16,9 @@ router.get('/', async (req, res) => {
 router.get('/:username', async (req, res) => {
     const { username } = req.params;
     try {
-        console.log(`Fetching user with ID: ${username}`);  // Log the username to check if it's being passed correctly
+        console.log(`Fetching user with ID: ${username}`);  
         const user = await getUserByUsername(username);
-        console.log(user);  // Log the result of getUserById
+        console.log(user);  
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
@@ -32,9 +32,9 @@ router.get('/:username', async (req, res) => {
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        console.log(`Fetching user with ID: ${id}`);  // Log the ID to check if it's being passed correctly
+        console.log(`Fetching user with ID: ${id}`);  
         const user = await getUserById(id);
-        console.log(user);  // Log the result of getUserById
+        console.log(user);  
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }

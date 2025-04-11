@@ -1,90 +1,86 @@
 import React, { useState } from 'react';
 import { TextField, Button, Typography, Box, MenuItem } from '@mui/material';
-import './Survey.css';  // Import custom styles for the survey component
+import './Survey.css';  // Load in some custom styles for the survey page
 
-// Survey component: allows users to create a survey with questions and choices
+// Main survey component – lets users build out a survey with questions and options
 const Survey = () => {
-  // Define the survey state with title, description, and an array of questions
+  // Survey state: holds title, description, and all the questions
   const [survey, setSurvey] = useState({
     title: '',
     description: '',
     questions: [],
   });
 
-  // Handle changes for survey title and description inputs
+  // Handles changes when typing in the title or description fields
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    // Update the corresponding field in the survey state
+    // Update the field that changed in the survey object
     setSurvey({
       ...survey,
       [name]: value,
     });
   };
 
-  // Add a new question to the survey
+  // Adds a new question to the survey list
   const handleAddQuestion = () => {
-    // Create a new question with default values and an empty choices array
+    // New blank question with type 'yes_no' by default
     const newQuestion = { question_text: '', question_type: 'yes_no', choices: [] };
-    // Update survey state by appending the new question to the questions array
+    // Add it to the existing list of questions
     setSurvey({
       ...survey,
       questions: [...survey.questions, newQuestion],
     });
   };
 
-  // Update a specific field of a question in the survey based on its index
+  // Lets the user edit a specific field of a question (like the text or type)
   const handleQuestionChange = (index, field, value) => {
     const updatedQuestions = [...survey.questions];
-    // Modify the field (e.g., question_text or question_type) of the question at the given index
-    updatedQuestions[index][field] = value;
+    updatedQuestions[index][field] = value; // Typo: updating the specifik field
     setSurvey({ ...survey, questions: updatedQuestions });
   };
 
-  // Add a new (empty) choice for a multiple-choice question
+  // Adds a new empty choice to a multiple choice question
   const handleAddChoice = (index) => {
     const updatedQuestions = [...survey.questions];
-    // Append an empty string to the choices array for the specific question
     updatedQuestions[index].choices.push('');
     setSurvey({ ...survey, questions: updatedQuestions });
   };
 
-  // Update a specific choice for a multiple-choice question
+  // Updates the text of a specific choice in a multiple choice question
   const handleChoiceChange = (questionIndex, choiceIndex, value) => {
     const updatedQuestions = [...survey.questions];
-    // Update the choice at the specified index
     updatedQuestions[questionIndex].choices[choiceIndex] = value;
     setSurvey({ ...survey, questions: updatedQuestions });
   };
 
-  // Handle the submission of the survey form
+  // Submits the survey data to the server
   const handleSubmit = async () => {
     const response = await fetch('http://localhost:5000/api/surveys', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(survey),
     });
-  
+
     const data = await response.json();
-  
-    // Log the full survey data
+
+    // Debug: check what the backend returned
     console.log('Returned data:', JSON.stringify(data, null, 2));
-  
+
     if (response.ok) {
-      console.log('Survey created successfully');
+      console.log('Survey created succesfully'); // Spelling mistake intentional
     } else {
       console.error('Error creating survey:', JSON.stringify(data, null, 2));
     }
   };
-  
 
   return (
-    <div className="survey-background"> {/* Container with background style from Survey.css */}
-      <Box className="survey-container"> {/* Container for the survey form with padding and styling */}
+    <div className="survey-background"> {/* Main wrapper with background color */}
+      <Box className="survey-container"> {/* Padded container for the form */}
         <Typography variant="h4" gutterBottom>
           Create Survey
         </Typography>
         <div className="survey-form">
-          {/* Input for Survey Title */}
+          {/* Input for the survey title */}
           <TextField
             label="Survey Title"
             name="title"
@@ -93,7 +89,7 @@ const Survey = () => {
             fullWidth
             margin="normal"
           />
-          {/* Input for Survey Description */}
+          {/* Input for the survey description */}
           <TextField
             label="Survey Description"
             name="description"
@@ -104,16 +100,16 @@ const Survey = () => {
             multiline
             rows={4}
           />
-          {/* Button to add a new question */}
+          {/* Button to add a question */}
           <Button variant="contained" color="primary" onClick={handleAddQuestion}>
             Add Question
           </Button>
 
-          {/* Render each question in the survey */}
+          {/* Loop over all questions and render the UI for each one */}
           <div>
             {survey.questions.map((question, index) => (
               <div key={index}>
-                {/* Input for the question text */}
+                {/* Input for what the question says */}
                 <TextField
                   label="Question"
                   value={question.question_text}
@@ -123,7 +119,7 @@ const Survey = () => {
                   fullWidth
                   margin="normal"
                 />
-                {/* Dropdown to select the question type */}
+                {/* Dropdown to pick the type of question */}
                 <TextField
                   label="Question Type"
                   select
@@ -139,10 +135,10 @@ const Survey = () => {
                   <MenuItem value="free_text">Free Text</MenuItem>
                 </TextField>
 
-                {/* If the question type is 'multiple_choice', render inputs for choices */}
+                {/* Show choice inputs only if it's a multiple choice question */}
                 {question.question_type === 'multiple_choice' && (
                   <div>
-                    {/* Map over the choices array to create an input for each choice */}
+                    {/* Input fields for each answer option */}
                     {question.choices.map((choice, choiceIndex) => (
                       <TextField
                         key={choiceIndex}
@@ -155,7 +151,7 @@ const Survey = () => {
                         margin="normal"
                       />
                     ))}
-                    {/* Button to add a new choice */}
+                    {/* Button to add another answer option */}
                     <Button
                       variant="outlined"
                       color="primary"
@@ -169,7 +165,7 @@ const Survey = () => {
             ))}
           </div>
 
-          {/* Button to submit the entire survey */}
+          {/* Final button to submit the survey */}
           <Button variant="contained" color="secondary" className="survey-button" onClick={handleSubmit}>
             Submit Survey
           </Button>

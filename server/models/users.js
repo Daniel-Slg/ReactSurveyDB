@@ -6,7 +6,7 @@ const getUsers = async () => {
     return result.rows;
 };
 
-// NEW: Get a user by username
+// Get a user by username
 const getUserByUsername = async (username) => {
     const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
     return result.rows[0];
@@ -36,7 +36,7 @@ const updateUser = async (id, username, password_hash, role) => {
     return result.rows[0];
 };
 
-// Delete user
+//Delete user
 const deleteUser = async (id) => {
     await pool.query('DELETE FROM users WHERE id = $1', [id]);
 };

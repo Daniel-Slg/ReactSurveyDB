@@ -12,8 +12,6 @@ const createResponse = async (user_id, survey_id, client = pool) => {
         throw new Error('User ID and Survey ID are required');
     }
 
-    // Optionally, you can check if the user and survey exist in the database.
-    // For example:
     const userResult = await pool.query('SELECT * FROM users WHERE id = $1', [user_id]);
     if (userResult.rowCount === 0) {
         throw new Error('User not found');
@@ -33,7 +31,6 @@ const createResponse = async (user_id, survey_id, client = pool) => {
 
 // Delete a response
 const deleteResponse = async (id) => {
-    // Check if the response exists before deleting it
     const result = await pool.query('SELECT * FROM responses WHERE id = $1', [id]);
     if (result.rowCount === 0) {
         throw new Error('Response not found');

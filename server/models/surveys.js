@@ -13,7 +13,7 @@ const getSurveys = async () => {
   }
 };
 
-// Fetch a specific survey and its questions with choices
+//Fetch a specific survey and its questions based on ID
 const getSurveyById = async (surveyId) => {
   const client = await pool.connect();
   try {
@@ -30,7 +30,7 @@ const getSurveyById = async (surveyId) => {
       'SELECT * FROM choices WHERE question_id = ANY($1)',
       [questionIds]
     );
-
+    // TODO allow for no options
     const questionsWithChoices = questionsResult.rows.map(question => {
       const choices = question.question_type === 'multiple_choice'
         ? choicesResult.rows

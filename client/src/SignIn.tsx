@@ -21,9 +21,9 @@ const SignIn = () => {
         console.log("Login erfolgreich!");
         const { role } = response.data.user;
         const { id } = response.data.user;
-        localStorage.setItem('userRole', role); // speichert die Rolle im Browser
+        localStorage.setItem('userRole', role); // saves role in brower as well as id
         localStorage.setItem('userId', id);
-        navigate('/dashboard'); // Weiterleitung bei Erfolg
+        navigate('/dashboard'); // send to dashboard homepage
       } else {
         alert(response.data.message || 'Login fehlgeschlagen');
       }
@@ -49,7 +49,7 @@ const SignIn = () => {
         onChange={(e) => setPassword(e.target.value)}
         required
       />
-      <button type="submit">Einloggen</button>
+      <button type="submit">Log in</button>
     </form>
   );
 };

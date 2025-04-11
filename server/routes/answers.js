@@ -43,11 +43,11 @@ router.post('/', async (req, res) => {
     res.status(201).json({ success: true, response_id: response.id });
   } catch (error) {
     await client.query('ROLLBACK');
-    console.error('Error submitting answers:', error);  // Log the detailed error
+    console.error('Error submitting answers:', error);  
     res.status(500).json({
       success: false,
       error: 'Failed to submit answers',
-      details: error.message  // Send more detailed error info back
+      details: error.message  
     });
   } finally {
     client.release();
